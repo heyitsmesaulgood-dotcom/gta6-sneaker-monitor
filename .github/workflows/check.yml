@@ -17,6 +17,15 @@ jobs:
     timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
+      - name: Test phone notification once
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          if [ ! -f notification-tested ]; then
+            test -n "$NTFY_TOPIC"
+            curl --fail --silent --show-error -H 'Title: GTA 6 monitor test' -H 'Priority: high' -d 'Your sneaker monitor notification test is working.' "https://ntfy.sh/$NTFY_TOPIC"
+            touch notification-tested
+          fi
       - name: Check storefront
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
@@ -25,5 +34,5 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add state.json
+          git add state.json notification-tested
           git diff --cached --quiet || (git commit -m 'Update storefront state' && git push)
