@@ -18,8 +18,8 @@ def request(url):
  return urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Cache-Control':'no-cache','Accept':'*/*'})
 def get(url):
  with urllib.request.urlopen(request(url),timeout=25) as r:
-  p=Page(); p.feed(r.read().decode('utf-8','replace')); return r.geturl(),p
-colors={'Gradient Camo':'JJ7603-900','Black':'JJ7604-001','White':'JJ7602-100'}
+  p=Page(); p.raw=r.read().decode('utf-8','replace'); p.feed(p.raw); return r.geturl(),p
+colors={'Black':'JJ7604-001','Gradient Camo':'JJ7603-900','White':'JJ7602-100'}
 path=Path('state.json')
 old=json.loads(path.read_text()) if path.exists() else {}
 new={}; events=[]
@@ -41,6 +41,10 @@ def catalog():
   result[url]={'title':p.get('title'),'variants':[{k:v.get(k) for k in ('id','title','sku','available','price')} for v in variants]}
  return result
 
+def raw_signals(raw):
+ return {'raffle_states':sorted(set(re.findall(r'"raffleStatus"\s*:\s*"([^"]+)"',raw,re.I))),
+ 'available':sorted(set(re.findall(r'"id"\s*:\s*(\d+)[^{}]*?"sku"\s*:\s*"(JJ760[234]-\d+)"[^{}]*?"available"\s*:\s*true',raw,re.I))),
+ 'handles':sorted(set(re.findall(r'"handle"\s*:\s*"([^"]*(?:air-force-1|af1|gradient-camo)[^"]*)"',raw,re.I)))}
 for url in ['https://www.cactusjack.com/','https://shop.travisscott.com/']:
  try:
   final,p=get(url); s=' '.join(' '.join(p.words).split())
@@ -51,8 +55,13 @@ for url in ['https://www.cactusjack.com/','https://shop.travisscott.com/']:
    relevant=[x for x in snippets if re.search(r'air force|af1|sneaker|'+sku,x,re.I)]
    snap['shoes'][name]=sorted(set(relevant))
   snap['links']=sorted(set(urllib.parse.urljoin(final,x) for x in p.links if re.search(r'air.force|af1|raffle|JJ760[234]|gradient.camo|sweepstakes|enter.draw',x,re.I)))
+  snap['raw_signals']=raw_signals(p.raw)
+  if snap['raw_signals']['raffle_states']:
+   snap['raffle']=any(x.lower() in ('open','live','active','started') for x in snap['raw_signals']['raffle_states'])
   new[url]=snap
-  if url in old and old[url]!=snap: events.append(url)
+  previous=old.get(url,{})
+  comparable=snap if 'raw_signals' in previous else {k:v for k,v in snap.items() if k!='raw_signals'}
+  if previous and (previous!=comparable or ('raw_signals' not in previous and (snap['raffle'] or snap['raw_signals']['available']))): events.append(url)
   if url not in old and (snap['raffle'] or snap['password']): events.append(url)
  except Exception as e: print(url,e)
 if not new: raise SystemExit('No successful homepage checks')
@@ -67,7 +76,7 @@ try:
  print('Public catalog available; matching products:',len(products))
 except Exception as e: print('Public catalog unavailable:',type(e).__name__)
 # Watch public product pages if the storefront or catalog exposes a matching link.
-links=set()
+links={store+'products/'+h for h in ('air-force-1-07-rs-black-placeholder','air-force-1-07-rs-gradient-camo-placeholder','air-force-1-07-rs-white-copy')}
 for snap in list(new.values()):
  if isinstance(snap,dict) and 'links' in snap:
   links.update(snap['links'])
@@ -81,21 +90,21 @@ def product_page(url):
  try:
   final,p=get(url)
   words=' '.join(' '.join(p.words).split())
-  relevant=bool(shoe_rx.search(words))
+  relevant=bool(shoe_rx.search(words) or shoe_rx.search(p.raw))
   statuses=sorted(set(re.findall(r'add to (?:cart|bag)|sold out|coming soon|enter (?:the )?(?:raffle|draw)|notify me|buy now|out of stock',words,re.I)))
-  return url,{'url':final,'password':p.password,'relevant':relevant,'status':statuses}
+  return url,{'url':final,'password':p.password,'relevant':relevant,'status':statuses,'raw_signals':raw_signals(p.raw)}
  except Exception: return None
 with ThreadPoolExecutor(max_workers=4) as pool:
  for entry in pool.map(product_page,sorted(links)[:12]):
   if entry:
    url,snap=entry
-   if snap.get('relevant') and product_pages.get(url)!=snap: events.append(url)
+   if snap.get('relevant') and ((url in product_pages and product_pages[url]!=snap) or snap['raw_signals']['available']): events.append(url)
    product_pages[url]=snap
 if product_pages: new['_product_pages']=product_pages
 print(json.dumps(new,indent=2))
 if events:
  msg='Possible Cactus Jack sneaker change. Check immediately: '+ ' '.join(dict.fromkeys(events))
- target=next((x for x in events if '/products/' in x),store)
+ target=store
  topic=os.environ.get('NTFY_TOPIC','')
  bark=os.environ.get('BARK_KEY','')
  sent=False
