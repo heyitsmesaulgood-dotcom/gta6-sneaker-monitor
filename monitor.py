@@ -110,7 +110,7 @@ if events:
  sent=False
  if bark:
   try:
-   payload={'device_key':bark,'title':'GTA 6 AF1 storefront change','body':msg,'level':'timeSensitive','sound':'alarm','group':'GTA 6 AF1','url':target}
+   payload={'device_key':bark,'title':'Travis Scott x GTA 6 AF1 | Site change','body':msg,'level':'timeSensitive','sound':'alarm','group':'Travis Scott x GTA 6 AF1','url':target}
    req=urllib.request.Request('https://api.day.app/push',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'})
    with urllib.request.urlopen(req,timeout=15) as r:
     if json.load(r).get('code')!=200: raise RuntimeError('Bark rejected push')
@@ -118,7 +118,7 @@ if events:
   except Exception: print('Bark push failed')
  if topic:
   try:
-   req=urllib.request.Request('https://ntfy.sh/'+urllib.parse.quote(topic,safe=''),data=msg.encode(),headers={'Title':'GTA 6 AF1 storefront change','Priority':'urgent','Click':target})
+   req=urllib.request.Request('https://ntfy.sh/'+urllib.parse.quote(topic,safe=''),data=msg.encode(),headers={'Title':'Travis Scott x GTA 6 AF1 | Site change','Priority':'urgent','Click':target})
    with urllib.request.urlopen(req,timeout=15) as r: print('ntfy push accepted',r.status); sent=True
   except Exception: print('ntfy push failed')
  if not sent: raise SystemExit('No notification channel accepted alert; retry next run')
