@@ -1,0 +1,29 @@
+name: Cactus Jack sneaker watch
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/check.yml'
+  schedule:
+    - cron: '3/5 * * * *'
+permissions:
+  contents: write
+concurrency:
+  group: sneaker-watch
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check storefront
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python3 monitor.py
+      - name: Save state
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add state.json
+          git diff --cached --quiet || (git commit -m 'Update storefront state' && git push)
