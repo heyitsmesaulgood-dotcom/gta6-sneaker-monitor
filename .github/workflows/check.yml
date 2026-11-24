@@ -21,10 +21,10 @@ jobs:
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         run: |
-          if [ ! -f notification-tested ]; then
+          if [ ! -f notification-tested-v2 ]; then
             test -n "$NTFY_TOPIC"
-            curl --fail --silent --show-error -H 'Title: GTA 6 monitor test' -H 'Priority: high' -d 'Your sneaker monitor notification test is working.' "https://ntfy.sh/$NTFY_TOPIC"
-            touch notification-tested
+            curl --fail --silent --show-error -H 'Title: GTA 6 monitor test 2' -H 'Priority: high' -d 'Your sneaker monitor notification test is working.' "https://ntfy.sh/$NTFY_TOPIC"
+            touch notification-tested-v2
           fi
       - name: Check storefront
         env:
@@ -34,5 +34,5 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add state.json notification-tested
+          git add state.json notification-tested-v2
           git diff --cached --quiet || (git commit -m 'Update storefront state' && git push)
