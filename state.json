@@ -1,8 +1,60 @@
 {
+  "_product_pages": {
+    "https://shop.travisscott.com/products/air-force-1-07-rs-black-placeholder": {
+      "password": false,
+      "raw_signals": {
+        "available": [],
+        "handles": [
+          "air-force-1-07-rs-black-placeholder"
+        ],
+        "raffle_states": []
+      },
+      "relevant": true,
+      "status": [],
+      "url": "https://shop.travisscott.com/products/air-force-1-07-rs-black-placeholder"
+    },
+    "https://shop.travisscott.com/products/air-force-1-07-rs-gradient-camo-placeholder": {
+      "password": false,
+      "raw_signals": {
+        "available": [],
+        "handles": [
+          "air-force-1-07-rs-gradient-camo-placeholder"
+        ],
+        "raffle_states": []
+      },
+      "relevant": true,
+      "status": [],
+      "url": "https://shop.travisscott.com/products/air-force-1-07-rs-gradient-camo-placeholder"
+    },
+    "https://shop.travisscott.com/products/air-force-1-07-rs-white-copy": {
+      "password": false,
+      "raw_signals": {
+        "available": [],
+        "handles": [
+          "air-force-1-07-rs-white-copy"
+        ],
+        "raffle_states": []
+      },
+      "relevant": true,
+      "status": [],
+      "url": "https://shop.travisscott.com/products/air-force-1-07-rs-white-copy"
+    }
+  },
   "https://shop.travisscott.com/": {
     "links": [],
     "password": false,
     "raffle": false,
+    "raw_signals": {
+      "available": [],
+      "handles": [
+        "air-force-1-07-rs-black-placeholder",
+        "air-force-1-07-rs-gradient-camo-placeholder",
+        "air-force-1-07-rs-white-copy"
+      ],
+      "raffle_states": [
+        "closed"
+      ]
+    },
     "shoes": {
       "Black": [
         "R FORCE 1 \u201807 RS $130 GRADIENT CAMO SOON AIR FORCE 1 \u201807 RS $130 WHITE SOON AIR FORCE 1 \u201807 RS $130 BLACK SOON Products *SHIPS FOR HOLIDAYS CACTUS JACK NIKE X GRAND THEFT AUTO VI 6 STARS TEE $58 *SHIPS FOR"
@@ -20,6 +72,17 @@
     "links": [],
     "password": false,
     "raffle": false,
+    "raw_signals": {
+      "available": [],
+      "handles": [
+        "air-force-1-07-rs-black-placeholder",
+        "air-force-1-07-rs-gradient-camo-placeholder",
+        "air-force-1-07-rs-white-copy"
+      ],
+      "raffle_states": [
+        "closed"
+      ]
+    },
     "shoes": {
       "Black": [
         "R FORCE 1 \u201807 RS $130 GRADIENT CAMO SOON AIR FORCE 1 \u201807 RS $130 WHITE SOON AIR FORCE 1 \u201807 RS $130 BLACK SOON Products *SHIPS FOR HOLIDAYS CACTUS JACK NIKE X GRAND THEFT AUTO VI 6 STARS TEE $58 *SHIPS FOR"
