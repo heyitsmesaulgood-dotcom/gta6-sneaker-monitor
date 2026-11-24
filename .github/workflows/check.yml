@@ -4,8 +4,9 @@ on:
   push:
     paths:
       - '.github/workflows/check.yml'
+      - 'monitor.py'
   schedule:
-    - cron: '3/5 * * * *'
+    - cron: '3,8,13,18,23,28,33,38,43,48,53,58 * * * *'
 permissions:
   contents: write
 concurrency:
@@ -14,34 +15,12 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Test phone notification once
-        env:
-          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-        run: |
-          if [ ! -f notification-tested-v2 ]; then
-            test -n "$NTFY_TOPIC"
-            curl --fail --silent --show-error -H 'Title: GTA 6 monitor test 2' -H 'Priority: high' -d 'Your sneaker monitor notification test is working.' "https://ntfy.sh/$NTFY_TOPIC"
-            touch notification-tested-v2
-          fi
-      - name: Test Bark after secret setup
-        env:
-          BARK_KEY: ${{ secrets.BARK_KEY }}
-        run: |
-          if [ -n "$BARK_KEY" ] && [ ! -f bark-tested-v2 ]; then
-            python3 - <<'PY'
-          import os,json,urllib.request
-          data=json.dumps({'device_key':os.environ['BARK_KEY'],'title':'GTA 6 Bark test','body':'Your sneaker monitor is connected.','level':'timeSensitive','sound':'alarm','group':'GTA 6 AF1'}).encode()
-          req=urllib.request.Request('https://api.day.app/push',data=data,headers={'Content-Type':'application/json'})
-          with urllib.request.urlopen(req,timeout=15) as r:
-              if json.load(r).get('code')!=200: raise SystemExit('Bark rejected test')
-          print('Bark test accepted')
-          PY
-            touch bark-tested-v2
-          fi
-      - name: Check storefront
+      - name: Validate monitoring script
+        run: python3 -m py_compile monitor.py
+      - name: Check storefront and inventory
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           BARK_KEY: ${{ secrets.BARK_KEY }}
@@ -50,6 +29,5 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add state.json notification-tested-v2
-          if [ -f bark-tested-v2 ]; then git add bark-tested-v2; fi
+          git add state.json
           git diff --cached --quiet || (git commit -m 'Update storefront state' && git push)
