@@ -39,8 +39,20 @@ print(json.dumps(new,indent=2))
 if events:
  msg='Possible Cactus Jack sneaker change. Verify all three colors: '+ ' '.join(events)
  topic=os.environ.get('NTFY_TOPIC','')
+ bark=os.environ.get('BARK_KEY','')
+ sent=False
+ if bark:
+  try:
+   payload={'device_key':bark,'title':'GTA 6 AF1 storefront change','body':msg,'level':'timeSensitive','sound':'alarm','group':'GTA 6 AF1','url':'https://shop.travisscott.com/'}
+   req=urllib.request.Request('https://api.day.app/push',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'})
+   with urllib.request.urlopen(req,timeout=15) as r:
+    if json.load(r).get('code')!=200: raise RuntimeError('Bark rejected push')
+    print('Bark push accepted'); sent=True
+  except Exception: print('Bark push failed')
  if topic:
-  req=urllib.request.Request('https://ntfy.sh/'+urllib.parse.quote(topic,safe=''),data=msg.encode(),headers={'Title':'GTA 6 AF1 storefront change','Priority':'urgent','Click':'https://shop.travisscott.com/'})
-  with urllib.request.urlopen(req,timeout=20) as r: print('Push sent',r.status)
- else: print('ALERT:',msg,'(notification secret missing)')
+  try:
+   req=urllib.request.Request('https://ntfy.sh/'+urllib.parse.quote(topic,safe=''),data=msg.encode(),headers={'Title':'GTA 6 AF1 storefront change','Priority':'urgent','Click':'https://shop.travisscott.com/'})
+   with urllib.request.urlopen(req,timeout=15) as r: print('ntfy push accepted',r.status); sent=True
+  except Exception: print('ntfy push failed')
+ if not sent: raise SystemExit('No notification channel accepted alert; retry next run')
 old.update(new); path.write_text(json.dumps(old,sort_keys=True,indent=2)+'\n')
