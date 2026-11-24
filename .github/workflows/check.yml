@@ -26,13 +26,30 @@ jobs:
             curl --fail --silent --show-error -H 'Title: GTA 6 monitor test 2' -H 'Priority: high' -d 'Your sneaker monitor notification test is working.' "https://ntfy.sh/$NTFY_TOPIC"
             touch notification-tested-v2
           fi
+      - name: Test Bark once when configured
+        env:
+          BARK_KEY: ${{ secrets.BARK_KEY }}
+        run: |
+          if [ -n "$BARK_KEY" ] && [ ! -f bark-tested ]; then
+            python3 - <<'PY'
+          import os,json,urllib.request
+          data=json.dumps({'device_key':os.environ['BARK_KEY'],'title':'GTA 6 Bark test','body':'Your sneaker monitor is connected.','level':'timeSensitive','sound':'alarm','group':'GTA 6 AF1'}).encode()
+          req=urllib.request.Request('https://api.day.app/push',data=data,headers={'Content-Type':'application/json'})
+          with urllib.request.urlopen(req,timeout=15) as r:
+              if json.load(r).get('code')!=200: raise SystemExit('Bark rejected test')
+          print('Bark test accepted')
+          PY
+            touch bark-tested
+          fi
       - name: Check storefront
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          BARK_KEY: ${{ secrets.BARK_KEY }}
         run: python3 monitor.py
       - name: Save state
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add state.json notification-tested-v2
+          if [ -f bark-tested ]; then git add bark-tested; fi
           git diff --cached --quiet || (git commit -m 'Update storefront state' && git push)
