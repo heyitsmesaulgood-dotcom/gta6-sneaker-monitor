@@ -43,7 +43,7 @@
   "https://shop.travisscott.com/": {
     "links": [],
     "password": false,
-    "raffle": false,
+    "raffle": true,
     "raw_signals": {
       "available": [],
       "handles": [
@@ -52,18 +52,18 @@
         "air-force-1-07-rs-white-copy"
       ],
       "raffle_states": [
-        "closed"
+        "open"
       ]
     },
     "shoes": {
       "Black": [
-        "R FORCE 1 \u201807 RS $130 GRADIENT CAMO SOON AIR FORCE 1 \u201807 RS $130 WHITE SOON AIR FORCE 1 \u201807 RS $130 BLACK SOON Products *SHIPS FOR HOLIDAYS CACTUS JACK NIKE X GRAND THEFT AUTO VI 6 STARS TEE $58 *SHIPS FOR"
+        "7 RS $130 GRADIENT CAMO ENTER DRAW AIR FORCE 1 \u201807 RS $130 WHITE ENTER DRAW AIR FORCE 1 \u201807 RS $130 BLACK ENTER DRAW Products *SHIPS FOR HOLIDAYS CACTUS JACK NIKE X GRAND THEFT AUTO VI 6 STARS TEE $58 *SHI"
       ],
       "Gradient Camo": [
-        "n Navigation Cart : 0 Items CACTUS JACK FINAL HOURS : : : FINAL HOURS : : : AIR FORCE 1 \u201807 RS $130 GRADIENT CAMO SOON AIR FORCE 1 \u201807 RS $130 WHITE SOON AIR FORCE 1 \u201807 RS $130 BLACK SOON Products *SHIPS FOR HOLI"
+        "n Navigation Cart : 0 Items CACTUS JACK FINAL HOURS : : : FINAL HOURS : : : AIR FORCE 1 \u201807 RS $130 GRADIENT CAMO ENTER DRAW AIR FORCE 1 \u201807 RS $130 WHITE ENTER DRAW AIR FORCE 1 \u201807 RS $130 BLACK ENTER DRAW Produc"
       ],
       "White": [
-        "AL HOURS : : : FINAL HOURS : : : AIR FORCE 1 \u201807 RS $130 GRADIENT CAMO SOON AIR FORCE 1 \u201807 RS $130 WHITE SOON AIR FORCE 1 \u201807 RS $130 BLACK SOON Products *SHIPS FOR HOLIDAYS CACTUS JACK NIKE X GRAND THEFT"
+        "RS : : : FINAL HOURS : : : AIR FORCE 1 \u201807 RS $130 GRADIENT CAMO ENTER DRAW AIR FORCE 1 \u201807 RS $130 WHITE ENTER DRAW AIR FORCE 1 \u201807 RS $130 BLACK ENTER DRAW Products *SHIPS FOR HOLIDAYS CACTUS JACK NIKE X"
       ]
     },
     "url": "https://shop.travisscott.com/"
@@ -71,7 +71,7 @@
   "https://www.cactusjack.com/": {
     "links": [],
     "password": false,
-    "raffle": false,
+    "raffle": true,
     "raw_signals": {
       "available": [],
       "handles": [
@@ -80,18 +80,18 @@
         "air-force-1-07-rs-white-copy"
       ],
       "raffle_states": [
-        "closed"
+        "open"
       ]
     },
     "shoes": {
       "Black": [
-        "R FORCE 1 \u201807 RS $130 GRADIENT CAMO SOON AIR FORCE 1 \u201807 RS $130 WHITE SOON AIR FORCE 1 \u201807 RS $130 BLACK SOON Products *SHIPS FOR HOLIDAYS CACTUS JACK NIKE X GRAND THEFT AUTO VI 6 STARS TEE $58 *SHIPS FOR"
+        "7 RS $130 GRADIENT CAMO ENTER DRAW AIR FORCE 1 \u201807 RS $130 WHITE ENTER DRAW AIR FORCE 1 \u201807 RS $130 BLACK ENTER DRAW Products *SHIPS FOR HOLIDAYS CACTUS JACK NIKE X GRAND THEFT AUTO VI 6 STARS TEE $58 *SHI"
       ],
       "Gradient Camo": [
-        "n Navigation Cart : 0 Items CACTUS JACK FINAL HOURS : : : FINAL HOURS : : : AIR FORCE 1 \u201807 RS $130 GRADIENT CAMO SOON AIR FORCE 1 \u201807 RS $130 WHITE SOON AIR FORCE 1 \u201807 RS $130 BLACK SOON Products *SHIPS FOR HOLI"
+        "n Navigation Cart : 0 Items CACTUS JACK FINAL HOURS : : : FINAL HOURS : : : AIR FORCE 1 \u201807 RS $130 GRADIENT CAMO ENTER DRAW AIR FORCE 1 \u201807 RS $130 WHITE ENTER DRAW AIR FORCE 1 \u201807 RS $130 BLACK ENTER DRAW Produc"
       ],
       "White": [
-        "AL HOURS : : : FINAL HOURS : : : AIR FORCE 1 \u201807 RS $130 GRADIENT CAMO SOON AIR FORCE 1 \u201807 RS $130 WHITE SOON AIR FORCE 1 \u201807 RS $130 BLACK SOON Products *SHIPS FOR HOLIDAYS CACTUS JACK NIKE X GRAND THEFT"
+        "RS : : : FINAL HOURS : : : AIR FORCE 1 \u201807 RS $130 GRADIENT CAMO ENTER DRAW AIR FORCE 1 \u201807 RS $130 WHITE ENTER DRAW AIR FORCE 1 \u201807 RS $130 BLACK ENTER DRAW Products *SHIPS FOR HOLIDAYS CACTUS JACK NIKE X"
       ]
     },
     "url": "https://shop.travisscott.com/"
